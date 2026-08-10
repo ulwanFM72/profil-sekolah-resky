@@ -4,193 +4,171 @@
 
 @section('content')
 
-    @include('partials.hero')
-
-    {{-- STATISTIK --}}
-    <section class="section-stats">
+    {{-- HERO --}}
+    <section class="hero">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in">
-                    <div class="stat-card glass-card">
-                        <i class="bi bi-person-workspace stat-icon"></i>
-                        <h2 class="stat-number" data-count="{{ $statistik['jumlah_guru'] }}">0</h2>
-                        <p class="stat-label">Guru & Staff</p>
+            <div class="hero-grid">
+                <div class="hero-copy">
+                    <span class="hero-tag">Tahun Ajaran {{ date('Y') }}/{{ date('Y') + 1 }} — {{ $setting->status ?? 'Sekolah' }} Terakreditasi {{ $setting->akreditasi ?? '' }}</span>
+                    <h1 class="hero-title">{{ $setting->nama_sekolah ?? 'Nama Sekolah' }}</h1>
+                    <p class="hero-desc">{{ $setting->visi ?? 'Mewujudkan generasi unggul, berkarakter, dan siap menghadapi dunia kerja maupun pendidikan lanjutan.' }}</p>
+                    <div class="hero-actions">
+                        <a href="{{ route('spmb') }}" class="btn-ink">Daftar SPMB <i class="bi bi-arrow-right"></i></a>
+                        <a href="{{ route('profile') }}" class="btn-outline-ink">Profil Sekolah</a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="stat-card glass-card">
-                        <i class="bi bi-people-fill stat-icon"></i>
-                        <h2 class="stat-number" data-count="{{ $statistik['jumlah_siswa'] }}">0</h2>
-                        <p class="stat-label">Siswa Aktif</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="stat-card glass-card">
-                        <i class="bi bi-trophy-fill stat-icon"></i>
-                        <h2 class="stat-number" data-count="{{ $statistik['jumlah_prestasi'] }}">0</h2>
-                        <p class="stat-label">Prestasi Diraih</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="stat-card glass-card">
-                        <i class="bi bi-stars stat-icon"></i>
-                        <h2 class="stat-number" data-count="{{ $statistik['jumlah_ekstrakurikuler'] }}">0</h2>
-                        <p class="stat-label">Ekstrakurikuler</p>
-                    </div>
+                <div class="hero-panel">
+                    <div class="hero-fact"><span class="num">{{ $statistik['jumlah_siswa'] }}</span><span class="lbl">Siswa Aktif</span></div>
+                    <div class="hero-fact"><span class="num">{{ $statistik['jumlah_guru'] }}</span><span class="lbl">Guru & Tenaga Pendidik</span></div>
+                    <div class="hero-fact"><span class="num">{{ $jurusan->count() }}</span><span class="lbl">Kompetensi Keahlian</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    {{-- 4 JURUSAN --}}
-    <section class="section-jurusan bg-soft">
+    {{-- STATISTIK STRIP --}}
+    <section class="stat-strip-wrap">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
-                <span class="section-tag">Program Keahlian</span>
-                <h2 class="section-title">Jurusan / Kompetensi Keahlian</h2>
-                <p class="section-subtitle">Empat kompetensi keahlian unggulan yang siap membekali masa depan siswa</p>
-            </div>
-
-            <div class="row g-4 mt-2">
-                @foreach($jurusan as $i => $item)
-                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ $i * 100 }}">
-                        <div class="jurusan-card">
-                            <div class="jurusan-thumb-wrap">
-                                <img src="{{ $item->gambar_sampul ? asset('storage/'.$item->gambar_sampul) : 'https://placehold.co/500x350/1E3A8A/FFFFFF?text='.$item->singkatan }}" alt="{{ $item->nama }}" class="jurusan-thumb">
-                                <span class="jurusan-badge">{{ $item->singkatan }}</span>
-                            </div>
-                            <div class="jurusan-body">
-                                <h6>{{ $item->nama }}</h6>
-                                <p class="jurusan-desc">{{ \Illuminate\Support\Str::limit($item->deskripsi, 80) }}</p>
-                                <a href="{{ route('jurusan.show', $item->slug) }}" class="btn btn-outline-navy-soft rounded-pill w-100 ripple btn-sm">Lihat Detail</a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+            <div class="stat-strip">
+                <div class="stat-cell"><span class="num" data-count="{{ $statistik['jumlah_guru'] }}">0</span><span class="lbl">Guru & Staff</span></div>
+                <div class="stat-cell"><span class="num" data-count="{{ $statistik['jumlah_siswa'] }}">0</span><span class="lbl">Siswa Aktif</span></div>
+                <div class="stat-cell"><span class="num" data-count="{{ $statistik['jumlah_prestasi'] }}">0</span><span class="lbl">Prestasi Diraih</span></div>
+                <div class="stat-cell"><span class="num" data-count="{{ $statistik['jumlah_ekstrakurikuler'] }}">0</span><span class="lbl">Ekstrakurikuler</span></div>
             </div>
         </div>
     </section>
 
-    {{-- BERITA TERBARU --}}
-    <section class="section-news">
+    {{-- JURUSAN --}}
+    <section class="section">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
-                <span class="section-tag">Informasi Terkini</span>
-                <h2 class="section-title">Berita Terbaru</h2>
+            <div class="section-head">
+                <div><span class="section-eyebrow">01 — Program Keahlian</span><h2 class="section-title">Kompetensi Keahlian</h2></div>
+                <a href="{{ route('jurusan.index') }}" class="section-link">Semua Jurusan</a>
             </div>
 
-            <div class="row g-4 mt-2">
-                @forelse($beritaTerbaru as $i => $berita)
-                    <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ $i * 100 }}">
-                        <div class="news-card">
-                            <div class="news-thumb-wrap">
-                                <img src="{{ $berita->thumbnail ? asset('storage/'.$berita->thumbnail) : 'https://placehold.co/500x300/1E3A8A/FFFFFF?text=Berita' }}" alt="{{ $berita->judul }}" class="news-thumb">
-                                <span class="news-date-badge">{{ $berita->tanggal->translatedFormat('d M Y') }}</span>
-                            </div>
-                            <div class="news-body">
-                                <h5 class="news-title">{{ $berita->judul }}</h5>
-                                <p class="news-excerpt">{{ $berita->ringkasan }}</p>
-                                <a href="{{ route('news.show', $berita->slug) }}" class="news-link">Baca Selengkapnya <i class="bi bi-arrow-right"></i></a>
-                            </div>
-                        </div>
+            @foreach($jurusan as $i => $item)
+                <div class="jurusan-row">
+                    <span class="row-num">{{ sprintf('%02d', $i + 1) }}</span>
+                    <img class="row-thumb" src="{{ $item->gambar_sampul ? asset('storage/'.$item->gambar_sampul) : 'https://placehold.co/280x200/16264D/FAF7F0?text='.$item->singkatan }}" alt="{{ $item->nama }}">
+                    <div class="row-body">
+                        <h3>{{ $item->nama }}</h3>
+                        <p>{{ \Illuminate\Support\Str::limit($item->deskripsi, 130) }}</p>
+                        <div class="row-meta"><span>{{ $item->siswa_count }} Siswa</span><span>{{ $item->singkatan }}</span></div>
                     </div>
-                @empty
-                    <p class="text-center text-muted">Belum ada berita.</p>
-                @endforelse
+                    <a href="{{ route('jurusan.show', $item->slug) }}" class="row-cta">Lihat Detail</a>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+    {{-- BERITA --}}
+    <section class="section section-alt">
+        <div class="container">
+            <div class="section-head">
+                <div><span class="section-eyebrow">02 — Kabar Sekolah</span><h2 class="section-title">Berita Terbaru</h2></div>
+                <a href="{{ route('news.index') }}" class="section-link">Semua Berita</a>
             </div>
+
+            @forelse($beritaTerbaru as $berita)
+                <a href="{{ route('news.show', $berita->slug) }}" class="news-index-item">
+                    <span class="n-date">{{ $berita->tanggal->translatedFormat('d M Y') }}</span>
+                    <div class="n-body">
+                        @if($berita->kategori)<span class="n-tag">{{ $berita->kategori }}</span>@endif
+                        <h3>{{ $berita->judul }}</h3>
+                        <p>{{ $berita->ringkasan }}</p>
+                    </div>
+                    <span class="n-arrow"><i class="bi bi-arrow-right"></i></span>
+                </a>
+            @empty
+                <p class="text-muted">Belum ada berita.</p>
+            @endforelse
         </div>
     </section>
 
     {{-- PRESTASI --}}
-    <section class="section-achievement bg-soft">
+    <section class="section">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
-                <span class="section-tag">Kebanggaan Kami</span>
-                <h2 class="section-title">Prestasi Sekolah</h2>
+            <div class="section-head">
+                <div><span class="section-eyebrow">03 — Kebanggaan Kami</span><h2 class="section-title">Prestasi Sekolah</h2></div>
+                <a href="{{ route('achievement') }}" class="section-link">Semua Prestasi</a>
             </div>
-            <div class="achievement-scroll mt-4" data-aos="fade-up">
-                @forelse($prestasiTerbaru as $prestasi)
-                    <div class="achievement-card">
-                        <span class="achievement-year">{{ $prestasi->tahun }}</span>
-                        <span class="badge-kategori badge-{{ \Illuminate\Support\Str::slug($prestasi->kategori) }}">{{ $prestasi->kategori }}</span>
-                        <h6 class="achievement-title">{{ $prestasi->nama_prestasi }}</h6>
-                        <p class="achievement-desc">{{ $prestasi->deskripsi }}</p>
-                        <span class="achievement-level"><i class="bi bi-award"></i> Tingkat {{ $prestasi->tingkat }}</span>
+
+            @forelse($prestasiTerbaru->take(5) as $p)
+                <div class="ach-row">
+                    <span class="ach-year">{{ $p->tahun }}</span>
+                    <div>
+                        <div class="ach-title">{{ $p->nama_prestasi }}</div>
+                        <div class="ach-desc">{{ $p->deskripsi }}</div>
                     </div>
-                @empty
-                    <p class="text-center text-muted">Belum ada data prestasi.</p>
-                @endforelse
-            </div>
+                    <span class="ach-level">{{ $p->tingkat }}</span>
+                </div>
+            @empty
+                <p class="text-muted">Belum ada data prestasi.</p>
+            @endforelse
         </div>
     </section>
 
     {{-- GALERI --}}
-    <section class="section-gallery-preview">
+    <section class="section section-alt">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
-                <span class="section-tag">Dokumentasi</span>
-                <h2 class="section-title">Galeri Kegiatan</h2>
+            <div class="section-head">
+                <div><span class="section-eyebrow">04 — Dokumentasi</span><h2 class="section-title">Galeri Kegiatan</h2></div>
+                <a href="{{ route('gallery') }}" class="section-link">Semua Galeri</a>
             </div>
-            <div class="masonry-grid mt-4" data-aos="fade-up">
+
+            <div class="gal-grid">
                 @foreach($galeriTerbaru as $item)
-                    <div class="masonry-item">
-                        <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://placehold.co/400x300/1E3A8A/FFFFFF?text=Galeri' }}" alt="{{ $item->judul }}" loading="lazy">
-                        <div class="masonry-overlay">
-                            <span class="masonry-category">{{ $item->kategori }}</span>
-                            <span class="masonry-title">{{ $item->judul }}</span>
-                            <i class="bi bi-zoom-in overlay-icon"></i>
-                        </div>
-                    </div>
+                    <figure class="gal-figure lightbox-trigger-wrap">
+                        <a href="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://placehold.co/500x375/16264D/FAF7F0?text=Galeri' }}" class="lightbox-trigger" data-caption="{{ $item->judul }} — {{ $item->kategori }}">
+                            <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://placehold.co/500x375/16264D/FAF7F0?text=Galeri' }}" alt="{{ $item->judul }}" loading="lazy">
+                        </a>
+                        <figcaption><span class="g-title">{{ $item->judul }}</span><span class="g-cat">{{ $item->kategori }}</span></figcaption>
+                    </figure>
                 @endforeach
-            </div>
-            <div class="text-center mt-4" data-aos="fade-up">
-                <a href="{{ route('gallery') }}" class="btn btn-navy-gradient rounded-pill px-4 ripple">Lihat Semua Galeri <i class="bi bi-arrow-right ms-1"></i></a>
             </div>
         </div>
     </section>
 
     {{-- TESTIMONI --}}
-    <section class="section-testimonial bg-soft">
+    <section class="section">
         <div class="container">
-            <div class="section-header text-center" data-aos="fade-up">
-                <span class="section-tag">Kata Mereka</span>
-                <h2 class="section-title">Testimoni Siswa & Alumni</h2>
+            <div class="section-head">
+                <div><span class="section-eyebrow">05 — Kata Mereka</span><h2 class="section-title">Testimoni Siswa & Alumni</h2></div>
             </div>
-            <div id="testimonialCarousel" class="carousel slide mt-4" data-bs-ride="carousel" data-bs-interval="4000">
-                <div class="carousel-inner">
-                    @foreach($testimonials->chunk(3) as $index => $chunk)
-                        <div class="carousel-item @if($index === 0) active @endif">
-                            <div class="row g-4 justify-content-center">
-                                @foreach($chunk as $t)
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="testimonial-card glass-card">
-                                            <i class="bi bi-quote quote-icon"></i>
-                                            <p class="testimonial-text">"{{ $t->isi_testimoni }}"</p>
-                                            <div class="testimonial-author">
-                                                <img src="{{ $t->foto ? asset('storage/'.$t->foto) : 'https://placehold.co/60x60/1E3A8A/FFFFFF?text='.substr($t->nama,0,1) }}" alt="{{ $t->nama }}">
-                                                <div><h6>{{ $t->nama }}</h6><span>{{ $t->jurusan_kelas }}</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+
+            <div class="quote-deck">
+                @foreach($testimonials as $i => $t)
+                    <div class="quote-slide {{ $i === 0 ? 'active' : '' }}">
+                        <span class="quote-mark">&ldquo;</span>
+                        <p class="quote-text">{{ $t->isi_testimoni }}</p>
+                        <div class="quote-author">
+                            <img src="{{ $t->foto ? asset('storage/'.$t->foto) : 'https://placehold.co/60x60/16264D/FAF7F0?text='.substr($t->nama,0,1) }}" alt="{{ $t->nama }}">
+                            <div><strong>{{ $t->nama }}</strong><span>{{ $t->jurusan_kelas }}</span></div>
                         </div>
-                    @endforeach
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev"><span class="carousel-nav-btn"><i class="bi bi-chevron-left"></i></span></button>
-                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next"><span class="carousel-nav-btn"><i class="bi bi-chevron-right"></i></span></button>
+                    </div>
+                @endforeach
+
+                @if($testimonials->count() > 1)
+                    <div class="quote-dots">
+                        @foreach($testimonials as $i => $t)
+                            <button class="{{ $i === 0 ? 'active' : '' }}"></button>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </section>
 
     {{-- CTA SPMB --}}
-    <section class="section-generic">
+    <section class="section section-alt">
         <div class="container">
-            <div class="spmb-cta" data-aos="zoom-in">
-                <span class="section-tag" style="background:rgba(255,255,255,0.15); color:#fff;">Penerimaan Peserta Didik Baru</span>
-                <h2>{{ $spmb->judul }}</h2>
-                <p class="mx-auto" style="max-width:560px;">{{ \Illuminate\Support\Str::limit($spmb->deskripsi, 160) }}</p>
-                <a href="{{ route('spmb') }}" class="btn btn-light rounded-pill px-4 py-2 fw-semibold mt-2">Info SPMB Selengkapnya <i class="bi bi-arrow-right ms-1"></i></a>
+            <div class="spmb-cta">
+                <div>
+                    <span class="hero-tag" style="color:#F1DDCB; border-color:#F1DDCB;">Penerimaan Peserta Didik Baru</span>
+                    <h2>{{ $spmb->judul }}</h2>
+                    <p>{{ \Illuminate\Support\Str::limit($spmb->deskripsi, 150) }}</p>
+                </div>
+                <a href="{{ route('spmb') }}" class="btn-accent">Info SPMB <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
     </section>

@@ -4,26 +4,30 @@
 
 @section('content')
 
-    <section class="page-header">
-        <div class="container text-center" data-aos="fade-up">
-            <span class="section-tag">{{ $item->kategori ?? 'Ekstrakurikuler' }}</span>
+    <section class="page-masthead">
+        <div class="container">
+            <span class="section-eyebrow">{{ $item->kategori ?? 'Ekstrakurikuler' }}</span>
             <h1 class="page-title">{{ $item->nama }}</h1>
         </div>
     </section>
 
-    <section class="section-generic">
+    <section class="section">
         <div class="container">
-            <div class="row g-4 justify-content-center">
-                <div class="col-lg-8" data-aos="fade-up">
-                    <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://placehold.co/900x500/1E3A8A/FFFFFF?text='.urlencode($item->nama) }}" alt="{{ $item->nama }}" class="detail-image mb-4">
-                    <div class="glass-card content-card mb-4">
-                        <div class="row g-3">
-                            <div class="col-md-6"><span class="info-label"><i class="bi bi-person-badge"></i> Pembina</span><p class="info-value">{{ $item->pembina }}</p></div>
-                            <div class="col-md-6"><span class="info-label"><i class="bi bi-calendar-week"></i> Jadwal</span><p class="info-value">{{ $item->jadwal }}</p></div>
-                        </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <figure class="jurusan-detail-figure mb-4">
+                        <img src="{{ $item->gambar ? asset('storage/'.$item->gambar) : 'https://placehold.co/900x500/16264D/FAF7F0?text='.urlencode($item->nama) }}" alt="{{ $item->nama }}">
+                    </figure>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6"><div class="data-row" style="border-top:2px solid var(--line-strong);"><span class="k">Pembina</span><span class="v">{{ $item->pembina }}</span></div></div>
+                        <div class="col-md-6"><div class="data-row" style="border-top:2px solid var(--line-strong);"><span class="k">Jadwal</span><span class="v">{{ $item->jadwal }}</span></div></div>
                     </div>
-                    <div class="glass-card content-card"><h4>Deskripsi</h4><p>{{ $item->deskripsi }}</p></div>
-                    <a href="{{ route('extracurricular.index') }}" class="btn btn-outline-navy-soft rounded-pill mt-4"><i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar Ekstrakurikuler</a>
+                    <div class="info-panel">
+                        <span class="panel-eyebrow">Deskripsi</span>
+                        <h3>Tentang Kegiatan</h3>
+                        <p>{{ $item->deskripsi }}</p>
+                    </div>
+                    <a href="{{ route('extracurricular.index') }}" class="btn-outline-ink mt-4"><i class="bi bi-arrow-left"></i> Kembali</a>
                 </div>
             </div>
         </div>

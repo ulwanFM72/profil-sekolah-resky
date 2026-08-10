@@ -4,56 +4,51 @@
 
 @section('content')
 
-    <section class="page-header">
-        <div class="container text-center" data-aos="fade-up">
-            <span class="section-tag">Kebanggaan Kami</span>
+    <section class="page-masthead">
+        <div class="container">
+            <span class="section-eyebrow">Kebanggaan Kami</span>
             <h1 class="page-title">Prestasi Sekolah</h1>
-            <p class="page-subtitle">Rangkaian pencapaian akademik dan non akademik siswa-siswi kami</p>
+            <p class="page-desc">Rangkaian pencapaian akademik dan non akademik siswa-siswi kami.</p>
         </div>
     </section>
 
-    <section class="section-generic">
+    <section class="section">
         <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-6" data-aos="fade-right">
-                    <h4 class="d-flex align-items-center gap-2 mb-4"><i class="bi bi-mortarboard-fill text-navy"></i> Prestasi Akademik</h4>
-                    <div class="timeline">
-                        @forelse($akademik as $item)
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content glass-card">
-                                    <span class="achievement-year">{{ $item->tahun }}</span>
-                                    <h6>{{ $item->nama_prestasi }}</h6>
-                                    @if($item->nama_siswa)<p class="mb-1"><i class="bi bi-person"></i> {{ $item->nama_siswa }}</p>@endif
-                                    <p>{{ $item->deskripsi }}</p>
-                                    <span class="achievement-level"><i class="bi bi-award"></i> Tingkat {{ $item->tingkat }}</span>
-                                </div>
-                            </div>
-                        @empty
-                            <p class="text-muted">Belum ada data prestasi akademik.</p>
-                        @endforelse
-                    </div>
-                </div>
+            <div class="ach-tab-bar mb-4">
+                <button class="active" data-target="akademik">Akademik</button>
+                <button data-target="nonakademik">Non Akademik</button>
+            </div>
 
-                <div class="col-lg-6" data-aos="fade-left">
-                    <h4 class="d-flex align-items-center gap-2 mb-4"><i class="bi bi-trophy-fill text-navy"></i> Prestasi Non Akademik</h4>
-                    <div class="timeline">
-                        @forelse($nonAkademik as $item)
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content glass-card">
-                                    <span class="achievement-year">{{ $item->tahun }}</span>
-                                    <h6>{{ $item->nama_prestasi }}</h6>
-                                    @if($item->nama_siswa)<p class="mb-1"><i class="bi bi-person"></i> {{ $item->nama_siswa }}</p>@endif
-                                    <p>{{ $item->deskripsi }}</p>
-                                    <span class="achievement-level"><i class="bi bi-award"></i> Tingkat {{ $item->tingkat }}</span>
-                                </div>
-                            </div>
-                        @empty
-                            <p class="text-muted">Belum ada data prestasi non akademik.</p>
-                        @endforelse
+            <div data-ach-panel="akademik" style="display:block;">
+                @forelse($akademik as $item)
+                    <div class="ach-row">
+                        <span class="ach-year">{{ $item->tahun }}</span>
+                        <div>
+                            <div class="ach-title">{{ $item->nama_prestasi }}</div>
+                            @if($item->nama_siswa)<div class="ach-desc mb-1">{{ $item->nama_siswa }}</div>@endif
+                            <div class="ach-desc">{{ $item->deskripsi }}</div>
+                        </div>
+                        <span class="ach-level">{{ $item->tingkat }}</span>
                     </div>
-                </div>
+                @empty
+                    <p class="text-muted">Belum ada data prestasi akademik.</p>
+                @endforelse
+            </div>
+
+            <div data-ach-panel="nonakademik" style="display:none;">
+                @forelse($nonAkademik as $item)
+                    <div class="ach-row">
+                        <span class="ach-year">{{ $item->tahun }}</span>
+                        <div>
+                            <div class="ach-title">{{ $item->nama_prestasi }}</div>
+                            @if($item->nama_siswa)<div class="ach-desc mb-1">{{ $item->nama_siswa }}</div>@endif
+                            <div class="ach-desc">{{ $item->deskripsi }}</div>
+                        </div>
+                        <span class="ach-level">{{ $item->tingkat }}</span>
+                    </div>
+                @empty
+                    <p class="text-muted">Belum ada data prestasi non akademik.</p>
+                @endforelse
             </div>
         </div>
     </section>

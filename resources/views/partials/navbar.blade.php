@@ -1,34 +1,43 @@
-<nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
+<div class="utility-bar">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('home') }}">
-            <span class="brand-logo">
+        <div>
+            @if(!empty($setting->email))<span><i class="bi bi-envelope"></i>{{ $setting->email }}</span>@endif
+            @if(!empty($setting->telepon))<span><i class="bi bi-telephone"></i>{{ $setting->telepon }}</span>@endif
+        </div>
+        <div>
+            <span><i class="bi bi-geo-alt"></i>{{ $setting->alamat ?? '' }}</span>
+        </div>
+    </div>
+</div>
+
+<header class="masthead">
+    <div class="container masthead-inner">
+        <a href="{{ route('home') }}" class="brand-mark">
+            <span class="mark-box">
                 @if(!empty($setting->logo))
                     <img src="{{ asset('storage/'.$setting->logo) }}" alt="Logo">
                 @else
-                    <i class="bi bi-mortarboard-fill"></i>
+                    {{ strtoupper(substr($setting->nama_sekolah ?? 'S', 0, 2)) }}
                 @endif
             </span>
-            <span class="brand-text">{{ $setting->nama_sekolah ?? 'Nama Sekolah' }}</span>
+            <span class="brand-text">
+                <strong>{{ $setting->nama_sekolah ?? 'Nama Sekolah' }}</strong>
+                <span>{{ $setting->status ?? '' }} · Akreditasi {{ $setting->akreditasi ?? '' }}</span>
+            </span>
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+        <nav class="masthead-nav" id="masthead-nav">
+            <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
+            <a href="{{ route('profile') }}" class="{{ request()->routeIs('profile') ? 'active' : '' }}">Profil</a>
+            <a href="{{ route('jurusan.index') }}" class="{{ request()->routeIs('jurusan.*') ? 'active' : '' }}">Jurusan</a>
+            <a href="{{ route('guru') }}" class="{{ request()->routeIs('guru') ? 'active' : '' }}">Guru</a>
+            <a href="{{ route('extracurricular.index') }}" class="{{ request()->routeIs('extracurricular.*') ? 'active' : '' }}">Ekstrakurikuler</a>
+            <a href="{{ route('gallery') }}" class="{{ request()->routeIs('gallery') ? 'active' : '' }}">Galeri</a>
+            <a href="{{ route('news.index') }}" class="{{ request()->routeIs('news.*') ? 'active' : '' }}">Berita</a>
+            <a href="{{ route('achievement') }}" class="{{ request()->routeIs('achievement') ? 'active' : '' }}">Prestasi</a>
+            <a href="{{ route('spmb') }}" class="btn-spmb-tag">SPMB {{ date('Y') }}</a>
+        </nav>
 
-        <div class="collapse navbar-collapse" id="navMenu">
-            <ul class="navbar-nav ms-auto gap-1">
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">Beranda</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('profile') ? 'active' : '' }}" href="{{ route('profile') }}">Profil</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('jurusan.*') ? 'active' : '' }}" href="{{ route('jurusan.index') }}">Jurusan</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('guru') ? 'active' : '' }}" href="{{ route('guru') }}">Guru</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('extracurricular.*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">Ekstrakurikuler</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('gallery') ? 'active' : '' }}" href="{{ route('gallery') }}">Galeri</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('news.*') ? 'active' : '' }}" href="{{ route('news.index') }}">Berita</a></li>
-                <li class="nav-item"><a class="nav-link {{ request()->routeIs('achievement') ? 'active' : '' }}" href="{{ route('achievement') }}">Prestasi</a></li>
-                <li class="nav-item ms-lg-2">
-                    <a class="btn btn-navy-gradient rounded-pill px-4" href="{{ route('spmb') }}">SPMB</a>
-                </li>
-            </ul>
-        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>
     </div>
-</nav>
+</header>

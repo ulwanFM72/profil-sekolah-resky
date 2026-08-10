@@ -4,45 +4,30 @@
 
 @section('content')
 
-    <section class="page-header">
-        <div class="container text-center" data-aos="fade-up">
-            <span class="section-tag">Kompetensi Keahlian</span>
+    <section class="page-masthead">
+        <div class="container">
+            <span class="section-eyebrow">Kompetensi Keahlian</span>
             <h1 class="page-title">Jurusan / Program Keahlian</h1>
-            <p class="page-subtitle">Empat kompetensi keahlian unggulan untuk mempersiapkan siswa siap kerja, siap kuliah, dan siap berwirausaha</p>
+            <p class="page-desc">Empat kompetensi keahlian unggulan untuk mempersiapkan siswa siap kerja, siap kuliah, dan siap berwirausaha.</p>
         </div>
     </section>
 
-    <section class="section-generic">
+    <section class="section">
         <div class="container">
-            <div class="row g-4">
-                @forelse($jurusan as $i => $item)
-                    <div class="col-lg-6" data-aos="fade-up" data-aos-delay="{{ ($i % 2) * 100 }}">
-                        <div class="jurusan-card">
-                            <div class="jurusan-thumb-wrap">
-                                <img src="{{ $item->gambar_sampul ? asset('storage/'.$item->gambar_sampul) : 'https://placehold.co/700x420/1E3A8A/FFFFFF?text='.$item->singkatan }}" alt="{{ $item->nama }}" class="jurusan-thumb">
-                                <span class="jurusan-badge">{{ $item->singkatan }}</span>
-                            </div>
-                            <div class="jurusan-body">
-                                <h4>{{ $item->nama }}</h4>
-                                <p class="jurusan-desc">{{ \Illuminate\Support\Str::limit($item->deskripsi, 140) }}</p>
-                                <div class="jurusan-meta">
-                                    <div class="jurusan-meta-item">
-                                        <i class="bi bi-people-fill"></i>
-                                        <div><strong>{{ $item->siswa_count }}</strong><span>Siswa Aktif</span></div>
-                                    </div>
-                                    <div class="jurusan-meta-item">
-                                        <i class="bi bi-images"></i>
-                                        <div><strong>{{ $item->galeri()->count() }}</strong><span>Dokumentasi</span></div>
-                                    </div>
-                                </div>
-                                <a href="{{ route('jurusan.show', $item->slug) }}" class="btn btn-navy-gradient rounded-pill w-100 mt-3 ripple">Lihat Detail Jurusan <i class="bi bi-arrow-right ms-1"></i></a>
-                            </div>
-                        </div>
+            @forelse($jurusan as $i => $item)
+                <div class="jurusan-row">
+                    <span class="row-num">{{ sprintf('%02d', $i + 1) }}</span>
+                    <img class="row-thumb" src="{{ $item->gambar_sampul ? asset('storage/'.$item->gambar_sampul) : 'https://placehold.co/280x200/16264D/FAF7F0?text='.$item->singkatan }}" alt="{{ $item->nama }}">
+                    <div class="row-body">
+                        <h3>{{ $item->nama }}</h3>
+                        <p>{{ \Illuminate\Support\Str::limit($item->deskripsi, 150) }}</p>
+                        <div class="row-meta"><span>{{ $item->siswa_count }} Siswa Aktif</span><span>{{ $item->galeri()->count() }} Dokumentasi</span></div>
                     </div>
-                @empty
-                    <p class="text-center text-muted">Belum ada data jurusan.</p>
-                @endforelse
-            </div>
+                    <a href="{{ route('jurusan.show', $item->slug) }}" class="row-cta">Lihat Detail</a>
+                </div>
+            @empty
+                <p class="text-muted">Belum ada data jurusan.</p>
+            @endforelse
         </div>
     </section>
 
