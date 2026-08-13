@@ -36,8 +36,6 @@
             <a href="{{ route('admin.setting.edit') }}" class="{{ request()->routeIs('admin.setting.*') ? 'active' : '' }}"><i class="bi bi-building-gear"></i> Profil Sekolah</a>
             <a href="{{ route('admin.spmb.edit') }}" class="{{ request()->routeIs('admin.spmb.*') ? 'active' : '' }}"><i class="bi bi-pencil-square"></i> Info SPMB</a>
 
-            <span class="sidebar-label">Lainnya</span>
-            <a href="{{ route('home') }}" target="_blank"><i class="bi bi-box-arrow-up-right"></i> Lihat Website</a>
         </nav>
     </aside>
 

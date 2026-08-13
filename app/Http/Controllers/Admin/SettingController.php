@@ -41,6 +41,9 @@ class SettingController extends Controller
             'jam_operasional' => ['nullable', 'string', 'max:255'],
             'logo' => ['nullable', 'image', 'max:1024'],
             'hero_image' => ['nullable', 'image', 'max:2048'],
+        ], [
+            'nama_sekolah.regex' => 'Nama sekolah hanya boleh berisi huruf.',
+            'nama_kepala_sekolah.regex' => 'Nama kepala sekolah hanya boleh berisi huruf.',
         ]);
 
         if ($request->hasFile('logo')) {

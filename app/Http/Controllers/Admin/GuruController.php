@@ -24,11 +24,14 @@ class GuruController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
-            'jabatan' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-\']+$/u'],
+            'jabatan' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\-\']+$/u'],
             'nip' => ['nullable', 'string', 'max:50'],
             'mata_pelajaran' => ['nullable', 'string', 'max:255'],
             'foto' => ['nullable', 'image', 'max:2048'],
+        ], [
+            'nama.regex' => 'Nama hanya boleh berisi huruf.',
+            'jabatan.regex' => 'Jabatan hanya boleh berisi huruf.',
         ]);
 
         if ($request->hasFile('foto')) {

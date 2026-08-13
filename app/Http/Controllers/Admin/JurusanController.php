@@ -26,11 +26,14 @@ class JurusanController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\.\,\-\']+$/u'],
             'singkatan' => ['required', 'string', 'max:20'],
-            'kepala_jurusan' => ['nullable', 'string', 'max:255'],
+            'kepala_jurusan' => ['nullable', 'string', 'max:255', 'regex:/^[\pL\s\.\,\-\']+$/u'],
             'deskripsi' => ['required', 'string'],
             'gambar_sampul' => ['nullable', 'image', 'max:2048'],
+        ], [
+            'nama.regex' => 'Nama jurusan hanya boleh berisi huruf.',
+            'kepala_jurusan.regex' => 'Nama kepala jurusan hanya boleh berisi huruf.',
         ]);
 
         $data['slug'] = Str::slug($data['singkatan']);

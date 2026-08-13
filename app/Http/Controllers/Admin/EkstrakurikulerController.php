@@ -24,12 +24,15 @@ class EkstrakurikulerController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
-            'pembina' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\.\,\-\']+$/u'],
+            'pembina' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\.\,\-\']+$/u'],
             'jadwal' => ['required', 'string', 'max:255'],
             'kategori' => ['nullable', 'string', 'max:100'],
             'deskripsi' => ['required', 'string'],
             'gambar' => ['nullable', 'image', 'max:2048'],
+        ], [
+            'nama.regex' => 'Nama hanya boleh berisi huruf.',
+            'pembina.regex' => 'Nama pembina hanya boleh berisi huruf.',
         ]);
 
         if ($request->hasFile('gambar')) {

@@ -13,10 +13,8 @@ class ExtracurricularController extends Controller
         return view('pages.extracurricular', compact('ekstrakurikuler'));
     }
 
-    public function show(int $id)
+    public function show(Ekstrakurikuler $ekstrakurikuler)
     {
-        $item = Ekstrakurikuler::findOrFail($id);
-
-        return view('pages.extracurricular-detail', compact('item'));
+        return view('pages.extracurricular-detail', ['item' => $ekstrakurikuler]);
     }
 }

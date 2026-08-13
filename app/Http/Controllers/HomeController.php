@@ -17,8 +17,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $setting = Setting::current();
-        $spmb = SpmbInfo::current();
+        $setting = Setting::current() ?? new Setting();
+        $spmb = SpmbInfo::current() ?? new SpmbInfo();
 
         $statistik = [
             'jumlah_guru' => Guru::count(),
@@ -34,7 +34,14 @@ class HomeController extends Controller
         $testimonials = Testimonial::inRandomOrder()->take(6)->get();
 
         return view('pages.home', compact(
-            'setting', 'spmb', 'statistik', 'jurusan', 'beritaTerbaru', 'prestasiTerbaru', 'galeriTerbaru', 'testimonials'
+            'setting',
+            'spmb',
+            'statistik',
+            'jurusan',
+            'beritaTerbaru',
+            'prestasiTerbaru',
+            'galeriTerbaru',
+            'testimonials'
         ));
     }
 }

@@ -1,15 +1,3 @@
-<div class="utility-bar">
-    <div class="container">
-        <div>
-            @if(!empty($setting->email))<span><i class="bi bi-envelope"></i>{{ $setting->email }}</span>@endif
-            @if(!empty($setting->telepon))<span><i class="bi bi-telephone"></i>{{ $setting->telepon }}</span>@endif
-        </div>
-        <div>
-            <span><i class="bi bi-geo-alt"></i>{{ $setting->alamat ?? '' }}</span>
-        </div>
-    </div>
-</div>
-
 <header class="masthead">
     <div class="container masthead-inner">
         <a href="{{ route('home') }}" class="brand-mark">
@@ -36,6 +24,11 @@
             <a href="{{ route('news.index') }}" class="{{ request()->routeIs('news.*') ? 'active' : '' }}">Berita</a>
             <a href="{{ route('achievement') }}" class="{{ request()->routeIs('achievement') ? 'active' : '' }}">Prestasi</a>
             <a href="{{ route('spmb') }}" class="btn-spmb-tag">SPMB {{ date('Y') }}</a>
+            @auth
+                <a href="{{ route('admin.dashboard') }}" class="btn-admin-tag"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="btn-admin-tag"><i class="bi bi-person-lock"></i> Login Admin</a>
+            @endauth
         </nav>
 
         <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="bi bi-list"></i></button>

@@ -24,10 +24,12 @@ class TestimonialController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nama' => ['required', 'string', 'max:255'],
+            'nama' => ['required', 'string', 'max:255', 'regex:/^[\pL\s\.\,\-\']+$/u'],
             'jurusan_kelas' => ['nullable', 'string', 'max:100'],
             'isi_testimoni' => ['required', 'string'],
             'foto' => ['nullable', 'image', 'max:2048'],
+        ], [
+            'nama.regex' => 'Nama hanya boleh berisi huruf.',
         ]);
 
         if ($request->hasFile('foto')) {

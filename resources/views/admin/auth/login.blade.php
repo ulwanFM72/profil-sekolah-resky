@@ -30,8 +30,13 @@
                     <input type="email" name="email" class="form-control" value="{{ old('email') }}" required autofocus placeholder="admin@sekolah.sch.id">
                 </div>
                 <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" required placeholder="••••••••">
+                <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="password" class="form-control" required placeholder="••••••••">
+                        <button type="button" class="btn btn-outline-secondary" id="togglePassword" tabindex="-1">
+                            <i class="bi bi-eye-slash" id="toggleIcon"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="form-check mb-3">
                     <input class="form-check-input" type="checkbox" name="remember" id="remember">
@@ -43,6 +48,17 @@
             <a href="{{ route('home') }}" class="d-block text-center mt-4 text-muted small"><i class="bi bi-arrow-left"></i> Kembali ke Website</a>
         </div>
     </div>
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('password');
+        const icon = document.getElementById('toggleIcon');
 
+        const isHidden = passwordInput.type === 'password';
+        passwordInput.type = isHidden ? 'text' : 'password';
+
+        icon.classList.toggle('bi-eye', isHidden);
+        icon.classList.toggle('bi-eye-slash', !isHidden);
+    });
+</script>
 </body>
 </html>
